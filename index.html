@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Me - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Check Me</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="auth.html">User Authentication</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div id="progress-bar-container">
+            <div id="progress-bar"></div>
+        </div>
+        <h2>Dashboard</h2>
+        <p>Welcome to your dashboard! Choose an option below:</p>
+        
+        <section id="dashboard-options">
+            <button id="create-account-btn">Create Bank Account</button>
+            <button id="apply-loan-btn">Apply for Loan</button>
+            <button id="raise-issue-btn">Raise an Issue</button>
+            <button id="view-scholarships-btn">View Scholarship Schemes</button>
+        </section>
+
+        <!-- Account Types Section -->
+        <section id="account-types" class="hidden">
+            <h3>Select Account Type</h3>
+            <ul>
+                <li><button class="account-type" data-type="savings">Savings Account</button></li>
+                <li><button class="account-type" data-type="checking">Checking Account</button></li>
+                <li><button class="account-type" data-type="business">Business Account</button></li>
+            </ul>
+        </section>
+
+        <!-- Scholarship Section -->
+        <section id="scholarship-options" class="hidden">
+            <h3>Available Scholarship Schemes</h3>
+            <ul id="scholarship-list">
+                <li><button class="scholarship" data-scheme="merit-based">Merit-Based Scholarship</button></li>
+                <li><button class="scholarship" data-scheme="need-based">Need-Based Scholarship</button></li>
+                <li><button class="scholarship" data-scheme="sports">Sports Scholarship</button></li>
+            </ul>
+        </section>
+
+        <!-- Application Forms -->
+        <section id="account-application" class="hidden">
+            <h3>Account Application Form</h3>
+            <form id="application-form">
+                <label for="applicant-name">Name:</label>
+                <input type="text" id="applicant-name" required>
+
+                <label for="applicant-email">Email:</label>
+                <input type="email" id="applicant-email" required>
+
+                <label for="applicant-phone">Phone Number:</label>
+                <input type="tel" id="applicant-phone" required>
+
+                <label for="account-type">Account Type:</label>
+                <input type="text" id="account-type" disabled>
+
+                <button type="submit">Submit Application</button>
+            </form>
+        </section>
+
+        <section id="loan-application" class="hidden">
+            <h3>Loan Application Form</h3>
+            <form id="loan-form">
+                <label for="loan-amount">Loan Amount:</label>
+                <input type="number" id="loan-amount" required>
+
+                <label for="loan-purpose">Purpose of Loan:</label>
+                <input type="text" id="loan-purpose" required>
+
+                <button type="submit">Submit Loan Application</button>
+            </form>
+        </section>
+
+        <section id="issue-reporting" class="hidden">
+            <h3>Raise an Issue</h3>
+            <form id="issue-form">
+                <label for="issue-description">Describe the issue:</label>
+                <textarea id="issue-description" required></textarea>
+
+                <button type="submit">Submit Issue</button>
+            </form>
+        </section>
+
+        <!-- Scholarship Application Form -->
+        <section id="scholarship-application" class="hidden">
+            <h3>Scholarship Application Form</h3>
+            <form id="scholarship-form">
+                <label for="scholarship-name">Name:</label>
+                <input type="text" id="scholarship-name" required>
+
+                <label for="scholarship-email">Email:</label>
+                <input type="email" id="scholarship-email" required>
+
+                <label for="scholarship-reason">Reason for Applying:</label>
+                <textarea id="scholarship-reason" required></textarea>
+
+                <label for="selected-scheme">Selected Scheme:</label>
+                <input type="text" id="selected-scheme" disabled>
+
+                <button type="submit">Submit Scholarship Application</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Check Me. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('create-account-btn').addEventListener('click', function() {
+            document.getElementById('account-types').classList.remove('hidden');
+            document.getElementById('loan-application').classList.add('hidden');
+            document.getElementById('issue-reporting').classList.add('hidden');
+            document.getElementById('scholarship-options').classList.add('hidden');
+        });
+
+        document.getElementById('apply-loan-btn').addEventListener('click', function() {
+            document.getElementById('loan-application').classList.remove('hidden');
+            document.getElementById('account-types').classList.add('hidden');
+            document.getElementById('issue-reporting').classList.add('hidden');
+            document.getElementById('scholarship-options').classList.add('hidden');
+        });
+
+        document.getElementById('raise-issue-btn').addEventListener('click', function() {
+            document.getElementById('issue-reporting').classList.remove('hidden');
+            document.getElementById('account-types').classList.add('hidden');
+            document.getElementById('loan-application').classList.add('hidden');
+            document.getElementById('scholarship-options').classList.add('hidden');
+        });
+
+        document.getElementById('view-scholarships-btn').addEventListener('click', function() {
+            document.getElementById('scholarship-options').classList.remove('hidden');
+            document.getElementById('account-types').classList.add('hidden');
+            document.getElementById('loan-application').classList.add('hidden');
+            document.getElementById('issue-reporting').classList.add('hidden');
+        });
+
+        const scholarshipButtons = document.querySelectorAll('.scholarship');
+        scholarshipButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const selectedScheme = this.getAttribute('data-scheme');
+                document.getElementById('selected-scheme').value = selectedScheme;
+                document.getElementById('scholarship-application').classList.remove('hidden');
+                document.getElementById('scholarship-options').classList.add('hidden');
+            });
+        });
+
+        // Handle form submissions
+        document.getElementById('application-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Account application submitted for ' + document.getElementById('account-type').value + '!');
+        });
+
+        document.getElementById('loan-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Loan application submitted for amount: ' + document.getElementById('loan-amount').value + '!');
+        });
+
+        document.getElementById('issue-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Issue submitted: ' + document.getElementById('issue-description').value);
+        });
+
+        document.getElementById('scholarship-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Scholarship application submitted for ' + document.getElementById('selected-scheme').value + '!');
+        });
+
+        // Function to simulate progress bar running
+        function runProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const duration = 10000; // Duration for the progress bar (10 seconds)
+            let startTime = null;
+
+            function animateProgress(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const elapsed = timestamp - startTime;
+
+                // Calculate width percentage
+                const width = Math.min((elapsed / duration) * 100, 100);
+                progressBar.style.width = width + '%';
+
+                if (elapsed < duration) {
+                    requestAnimationFrame(animateProgress);
+                } else {
+                    // Optionally, reset the progress bar after completion
+                    setTimeout(() => {
+                        progressBar.style.width = '0%';
+                        runProgressBar(); // Restart the animation
+                    }, 2000); // Wait for 2 seconds before restarting
+                }
+            }
+
+            requestAnimationFrame(animateProgress);
+        }
+
+        // Start the progress bar when the page loads
+        document.addEventListener('DOMContentLoaded', runProgressBar);
+    </script>
+</body>
+</html>
