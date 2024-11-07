@@ -1,0 +1,42 @@
+/* Set up the container to use flexbox */
+.container {
+    display: flex;
+    flex-wrap: wrap; /* Allow items to wrap if needed */
+    justify-content: space-between; /* Distribute items evenly */
+    gap: 20px; /* Space between items */
+    margin: 0 auto;
+    border-radius: 12px; /* Center container */
+  }
+  
+  /* Style each item */
+  .item {
+    display: flex;
+    flex-direction: column; /* Stack image and caption vertically */
+    align-items: center; /* Center items horizontally */
+    width: calc(33.333% - 20px); /* 3 items per row with gap consideration */
+    box-sizing: border-box;
+    border-radius: 12px; /* Include padding and border in the element's total width */
+  }
+  
+  /* Ensure images are larger while maintaining aspect ratio */
+  .item img {
+    width: 100%; /* Make image fill its container width */
+    height: auto; /* Automatically adjust the height based on aspect ratio */
+    max-height: 400px; /* Increase max height for larger images */
+    object-fit: contain; /* Make sure the image fits without cropping */
+    border-radius: 12px; /* Optional: rounded corners for a more polished look */
+  }
+  
+  /* Style the captions */
+  .caption {
+    margin-top: 10px; /* Space between image and caption */
+    text-align: center; /* Center-align the text */
+    font-size: 21px; /* Optional: adjust font size */
+    color: #3e3d3d; /* Dark grey color for caption text */
+    line-height: 1.4; /* Space between lines of text */
+  }
+  .h1
+  {
+    text-align: center;
+  }
+  

@@ -1,0 +1,96 @@
+.body {
+    background-image: url('background.jpeg'); /* Add your background image here */
+    background-size: cover;
+    background-position: center;
+  }
+  .container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    
+  }
+  
+  .sign-in-box, .register-box {
+    
+      width: 90%;
+      max-width: 300px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    
+  }
+  
+  .sign-in-box.active {
+    display: block;
+  }
+  
+  .register-box.active {
+    display: block;
+  }
+  .sign-in-box.inactive, .register-box.inactive {
+    display: none;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #27346d;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #3e678e;
+  }
+  
+  .sign-up-text, .already-have-account {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .sign-up-text a, .already-have-account a {
+    color: #220e7a;
+    text-decoration: none;
+  }
+  
+  .sign-up-text a:hover, .already-have-account a:hover {
+    color: #220e7a;
+  }
+  
+  @media (max-width: 768px) {
+    .sign-in-box, .register-box {
+      width: 80%;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .sign-in-box, .register-box {
+      width: 90%;
+    }
+  }

@@ -1,0 +1,62 @@
+.alert-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #df0303e3; /* Red color */
+  color: #ffffff;
+  padding: 8px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.alert-fixed {
+  display:flex;
+  justify-content:space-between;
+align-items: center;
+  display:flex;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.alert-fixed h4{
+  font-size: 20px;
+}
+
+.alert-icon {
+  background-image: url('images/warningsymbol.png'); /* Replace with your image URL */
+  background-size: 24px 24px; /* Adjust the size to fit your image */
+  width: 24px;
+  height: 24px;
+  padding-top:0px;
+
+  display: inline-block;
+  margin-right: 10px;
+  background-repeat: no-repeat;
+}
+
+.alert-message {
+
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+}
+.alert-message a{
+  padding-right:30px;
+color:rgba(255, 221, 0, 0.896);}
+.moving-link {
+  display: inline-block;
+  white-space: nowrap;
+  animation: move-right 9s linear infinite;
+}
+
+@keyframes move-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donation Portal</title>
+    <link rel="stylesheet" href="dstyle.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+  </head>
+  <body>
+    <div class="donation-portal">
+      <h2>Make a Donation</h2>
+      <form id="donation-form">
+        <div class="amount-options">
+          <label>Amount:</label>
+          <div class="amount-btns">
+            <button type="button" class="amount-btn">Rs. 500</button>
+            <button type="button" class="amount-btn">Rs. 1000</button>
+            <button type="button" class="amount-btn">Rs. 2500</button>
+            <button type="button" class="amount-btn">Rs. 5000</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="form-group">
+          <label for="payment-option">Payment Option:</label>
+          <select id="payment-option" name="payment-option" required>
+            <option value="card">Credit/Debit Card</option>
+            <option value="netbanking">Net Banking</option>
+            <option value="gpay">Google Pay</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button type="submit" class="donate-btn">Donate</button>
+      </form>
+    </div>
+    <script src="card.js"></script>
+  </body>
+</html>
