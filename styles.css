@@ -21,7 +21,7 @@
   .item img {
     width: 100%;
     height: auto;
-    max-height: 400px; 
+    max-height: 20px; 
     object-fit: contain; 
     border-radius: 12px; 
   }

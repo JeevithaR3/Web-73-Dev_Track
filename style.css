@@ -11,13 +11,7 @@ align-items: center;
 padding:1% 2%;
 padding-top:70px;
 }
-.name{
-  display:flex;
-  border:  #000080 solid;
-  background: #000080;
-  padding:1px 20px;
-  border-radius:5px;
-}
+
 .name h4{
 
 text-align:center;
@@ -69,6 +63,52 @@ font-size: 17px;
 border-radius:7px;
 
 }
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding:80px;
+}
+
+.image-container {
+  width:50%;
+  margin-right:5px;
+}
+
+.image-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.explanation-container {
+  width: 45%;
+}
+
+.explanation-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.explanation-container p {
+  font-size: 18px;
+  color: #666;
+}
+@media only screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+  .image-container {
+    width: 100%;
+    margin-right: 0;
+  }
+  .explanation-container {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
 .fa{
 padding-right:7px;
 }
@@ -242,13 +282,3 @@ margin-top:60px;
   text-align: center;
   background-image:url("images/backgroun1.jpg"); 
 }
-
-
-
-
- 
-
-
-
-
-
