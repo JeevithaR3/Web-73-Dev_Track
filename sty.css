@@ -25,8 +25,8 @@ align-items: center;
 }
 
 .alert-icon {
-  background-image: url('images/warningsymbol.png'); /* Replace with your image URL */
-  background-size: 24px 24px; /* Adjust the size to fit your image */
+  background-image: url('images/warningsymbol.png'); 
+  background-size: 24px 24px; 
   width: 24px;
   height: 24px;
   padding-top:0px;
@@ -42,14 +42,16 @@ align-items: center;
   white-space: nowrap;
   overflow: hidden;
   width: 100%;
+  font-size: medium;
 }
 .alert-message a{
   padding-right:30px;
-color:rgba(255, 221, 0, 0.896);}
+color:black}
 .moving-link {
   display: inline-block;
   white-space: nowrap;
   animation: move-right 9s linear infinite;
+  font-size: medium;
 }
 
 @keyframes move-right {
