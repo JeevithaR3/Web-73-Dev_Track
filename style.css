@@ -6,7 +6,7 @@
 }
 body{
   background:white;
-  height: 100vh;
+  height:100vh;
   background-size: cover;
   background-position: center;
 }
@@ -76,33 +76,38 @@ border-radius:7px;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding:80px;
+  padding:2px;
+  margin:0;
+  padding-top:1px;
   
 
 }
 
 .image-container {
   width:50%;
-  margin-right:5px;
+  padding:1px;
 }
 
 .image-container img {
   width: 80%;
   height: auto;
   border-radius: 10px;
+  padding:1px;
 }
 
 .explanation-container {
   width: 45%;
+  padding:1px;
 }
 
 .explanation-container h2 {
   font-size: 24px;
+  padding:1px;
   margin-bottom: 10px;
 }
 
 .explanation-container p {
-  font-size: 18px;
+  font-size: 23px;
   color: #666;
 }
 @media only screen and (max-width: 768px) {
@@ -192,7 +197,6 @@ text-align:left;
 }
 .donate-2{
 border:2px navy;
-background-image:linear-gradient(#ffe0e0,#ffaeae);
 color:white;
 padding:10px 28px;
 font-size: 17px;
@@ -223,7 +227,8 @@ margin-top:60px;
   flex-basis:55%;
   margin-left:-7px;
   text-align:left;
-  margin-right:20px;
+  margin-right:25px;
+  margin-left:30px;
   font-size:18px;
   
  }
@@ -254,13 +259,14 @@ margin-top:60px;
   display: flex;
   flex-wrap: wrap; 
   justify-content: space-between; 
-  gap: 20px;
+  gap: 12px;
   margin: 0 auto;
-  border-radius: 12px;
+  border-radius:12px;
   
 }
 
 .item {
+  gap:6px;
   display: flex;
   flex-direction: column; 
   align-items: center; 
@@ -274,6 +280,7 @@ margin-top:60px;
 .item img {
   width: 100%;
   height: auto;
+  gap:6px;
   max-height: 400px; 
   object-fit: contain; 
   border-radius: 12px;
