@@ -2,6 +2,13 @@
   /* margin:0;
   height:0;*/
   font-family: "Poppins", sans-serif; 
+
+}
+body{
+  background:white;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
 }
 nav{
 
@@ -15,7 +22,7 @@ padding-top:50px;
 .name h4{
 
 text-align:center;
-color:white;
+color:black;
 text-align:left;
 }
 .nav-links{
@@ -55,11 +62,12 @@ text-decoration:underline
 padding-left:50px;
 }
 .donate{
-border:2px  #000080;
-background: #000080;
+border:2px navy;
+background:navy;
 color:white;
 padding:10px 28px;
 font-size: 17px;
+font-weight: 800;
 border-radius:7px;
 
 }
@@ -69,6 +77,8 @@ border-radius:7px;
   align-items: center;
   justify-content: space-between;
   padding:80px;
+  
+
 }
 
 .image-container {
@@ -118,7 +128,7 @@ width:20px;
 }
 .user-icon .fa{
   font-size: 30px;
-  color:#000080;
+  color:navy;
   
 }
 @media(max-width:700px)
@@ -166,7 +176,7 @@ width:20px;
   font-family: Arial, Helvetica, sans-serif;
 }
  .donation{
-  background: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url("images/donation.jpg");
+  background:navy,url("images/donation.jpg");
   background-position:center;
   margin:100px auto;
   width:95%;
@@ -181,8 +191,8 @@ padding-left:90px;
 text-align:left;
 }
 .donate-2{
-border:2px  #000080;
-background: #000080;
+border:2px navy;
+background-image:linear-gradient(#ffe0e0,#ffaeae);
 color:white;
 padding:10px 28px;
 font-size: 17px;
@@ -237,7 +247,7 @@ margin-top:60px;
  .footer .fa{
   padding-right:30px;
   font-size:20px;
-  color:#000080;
+  color:navy;
  }
  
 .container {
@@ -281,4 +291,58 @@ margin-top:60px;
 {
   text-align: center;
  
+}
+
+h1 {
+font-size: 36px;
+font-weight: bold;
+color: #333;
+text-align: center;
+margin-bottom: 20px;
+}
+
+.button {
+text-align: center;
+}
+
+.aadhar {
+background-color:linear-gradient(#ffe0e0,#ffaeae);
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+font-weight: bold;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.aadhar:hover {
+background-color:#ff6161;
+}
+
+.aadhar i {
+margin-right: 10px;
+}
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+h1 {
+font-size: 24px;
+}
+.aadhar {
+padding: 8px 15px;
+font-size: 14px;
+}
+}
+
+@media (max-width: 480px)
+ {
+h1 {
+font-size: 18px;
+}
+.aadhar {
+padding: 6px 10px;
+font-size: 12px;
+}
+ }
 }

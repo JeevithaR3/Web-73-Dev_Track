@@ -2,6 +2,7 @@
     background-image: url('backgroun1.jpg'); 
     background-size: cover;
     background-position: center;
+    background:linear-gradient(#ffe0e0,#ff9191);
   }
   .container {
     width: 100%;

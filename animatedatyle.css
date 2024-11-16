@@ -1,0 +1,109 @@
+body {
+    background:linear-gradient(rgb(155, 155, 255));
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    margin-top: 50;
+  }
+  @keyframes bounceAndTurn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) rotate(-20deg);
+    }
+    30% {
+      opacity: 1;
+      transform: scale(1.1) rotate(10deg);
+    }
+    50% {
+      transform: scale(0.9) rotate(-5deg);
+    }
+    70% {
+      transform: scale(1.05) rotate(3deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+  .animated-paragraph {
+    opacity: 0;
+    animation: bounceAndTurn 2s ease-out forwards;
+    animation-delay: 0.5s; 
+    max-width: 1350px;
+    margin: auto;
+    padding:60px;
+    background:linear-gradient(#ffe0e0,#ffaeae);
+    border-radius: 8px;
+    
+  }
+  h1 {
+font-size: 36px;
+font-weight: bold;
+color: #333;
+text-align: center;
+margin-bottom: 20px;
+}
+
+.button {
+text-align: center;
+}
+
+.aadhar {
+background:linear-gradient(#ffe0e0,#ff9191);
+color:black;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+font-weight: bold;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.aadhar:hover {
+background-color: rgb(3, 3, 255);
+}
+
+.aadhar i {
+margin-right: 10px;
+}
+
+/* Responsive design */
+
+@media (max-width: 768px) {
+h1 {
+  font-size: 24px;
+}
+.aadhar {
+  padding: 8px 15px;
+  font-size: 14px;
+}
+}
+
+@media (max-width: 480px) {
+h1 {
+  font-size: 18px;
+}
+.aadhar {
+  padding: 6px 10px;
+  font-size: 12px;
+}
+}
+.aadhar-btn-container {
+position: fixed;
+top: 20px;
+right: 20px;
+}
+.aadhar-btn {
+background-color:linear-gradient(#ffe0e0,#ffaeae);
+color: black;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+font-weight: bold;
+border-radius: 5px;
+cursor: pointer;
+transform: translateY(-20px); 
+}
