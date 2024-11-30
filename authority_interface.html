@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>KYC Application Verification</title>
+<link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"
+      rel="stylesheet"
+    />
+</head>
+<style>
+body {
+font-family: Arial, sans-serif;
+background-color: #f7f7f7;
+}
+.container {
+width: 100%;
+margin: 40px auto;
+}
+.row {
+margin-right: -15px;
+margin-left: -15px;
+}
+.col-md-6 {
+width:100%;
+float: left;
+position: relative;
+min-height: 1px;
+padding-right: 15px;
+padding-left: 15px;
+}
+.col-md-offset-3 {
+margin-left: 25%;
+width:800px;
+}
+.panel {
+background-color: #fff;
+border: 1px solid #ddd;
+border-radius: 4px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+width:1500px;
+}
+.panel-primary {
+border-color: #337ab7;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.panel-heading {
+background-color: navy;
+color: #fff;
+border-color: #337ab7;
+padding: 10px 15px;
+border-bottom: 1px solid #337ab7;
+text-align: center;
+}
+.panel-body {
+padding: 15px;
+}
+.form-group {
+margin-bottom: 15px;
+text-align: left;
+}
+.form-control {
+width: 100%;
+height: 40px;
+padding: 10px;
+font-size: 16px;
+border: 1px solid #ccc;
+}
+.form-control:focus {
+border-color: #337ab7;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.btn-primary {
+background-color: navy;
+color: #fff;
+border-color: #337ab7;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+}
+.btn-primary:hover {
+background-color: #23527c;
+border-color: #23527c;
+}
+.panel-footer {
+background-color: #f7f7f7;
+border-top: 1px solid navy;
+padding: 10px;
+text-align: right;
+}
+small {
+font-size: 12px;
+color: #666;
+}
+.text-center {
+text-align: center;
+}
+.panel-body h2 {
+margin-top: 0;
+margin-bottom: 20px;
+}
+</style>
+<body>
+<div class="container">
+<div class="row col-md-6 col-md-offset-3">
+<div class="panel panel-primary">
+<div class="panel-heading text-center">
+<h1>KYC Application Verification</h1>
+</div>
+<div class="panel-body">
+<div id="authority-interface">
+<h1>KYC Application Verification</h1>
+<ul id="pending-applications">
+<!-- List of pending KYC applications here -->
+</ul>
+<button id="accept-button">Accept</button>
+<button id="reject-button">Reject</button>
+<input type="text" id="application-id" placeholder="Enter Application ID">
+</div>
+</div>
+<div class="panel-footer text-right">
+<small>&copy; Aadhar 360 </small>
+</div>
+</div>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+    <script>
+        const contractAddress = '0x745C484B40353Dd416D85431dae364b2Ed4242e9';  // Replace with actual contract address
+        const contractABI = [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_authority",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "AadhaarRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "name": "AadhaarVerified",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "authority",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "registerAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "_status",
+          "type": "uint8"
+        }
+      ],
+      "name": "verifyAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserKYCDetails",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "submissionTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "verificationTime",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getVerificationStatus",
+      "outputs": [
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];  // Replace with the actual ABI of your contract
+        let web3;
+        let contract;
+        let authorityAddress;
+
+        // Initialize Web3 and contract
+        if (typeof window.ethereum !== 'undefined') {
+            web3 = new Web3(window.ethereum);
+            contract = new web3.eth.Contract(contractABI, contractAddress);
+        } else {
+            alert('Please install MetaMask to interact with this application.');
+        }
+
+        // Get authority address
+        async function getAuthorityAddress() {
+            const accounts = await web3.eth.requestAccounts();
+            authorityAddress = accounts[0];
+        }
+
+        // Handle accept/reject KYC
+        async function verifyKYC(status) {
+            const applicationId = document.getElementById('application-id').value;
+            const userAddress = applicationId;  // You need to fetch the correct address from your application list
+
+            await getAuthorityAddress();
+
+            try {
+                await contract.methods.verifyAadhaar(userAddress, status).send({ from: authorityAddress });
+                alert(`KYC Status Updated: ${status === 1 ? 'Accepted' : 'Rejected'}`);
+            } catch (error) {
+                console.error(error);
+                alert('Error updating KYC status.');
+            }
+        }
+
+        // Attach event listeners to Accept/Reject buttons
+        document.getElementById('accept-button').addEventListener('click', () => {
+            verifyKYC(1);  // 1 means Accepted
+        });
+
+        document.getElementById('reject-button').addEventListener('click', () => {
+            verifyKYC(2);  // 2 means Rejected
+        });
+    </script>
+</body>
+</html>

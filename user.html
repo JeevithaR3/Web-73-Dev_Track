@@ -1,50 +1,93 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Sign-in Page</title>
-    <link rel="stylesheet" type="text/css" href="ustyle.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="sign-in-box">
-        <h2>Sign-in</h2>
-        <form>
-          <input type="text" placeholder="Username" required />
-          <input type="password" placeholder="Password" required />
-          <button type="submit">Sign-in</button>
-        </form>
-        <p class="sign-up-text">
-          Don't have an account? <a href="#" class="toggle-form">Sign-up</a>
-        </p>
-      </div>
-      <div class="register-box inactive">
-        <h2>Register</h2>
-        <form>
-          <input type="text" placeholder="Username" required />
-          <input type="email" placeholder="Email" required />
-          <input type="password" placeholder="Password" required />
-          <button type="submit">Register</button>
-        </form>
-        <p class="already-have-account">
-          Already have an account? <a href="#" class="toggle-form">Sign-in</a>
-        </p>
-      </div>
+<head>
+  <title>Sign-in Page</title>
+  <link rel="stylesheet" type="text/css" href="ustyle.css" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+</head>
+<body>
+  <div class="container">
+    <div class="sign-in-box">
+      <h2>Sign-in</h2>
+      <form id="signin-form">
+        <input type="email" id="signin-email" placeholder="Email" required />
+        <input type="password" id="signin-password" placeholder="Password" required />
+        <button type="submit">Sign-in</button>
+      </form>
+      <p class="sign-up-text">
+        Don't have an account? <a href="#" class="toggle-form">Sign-up</a>
+      </p>
     </div>
-    <script>
-      const toggleForm = document.querySelectorAll(".toggle-form");
-      toggleForm.forEach((form) => {
-        form.addEventListener("click", () => {
-          document.querySelector(".sign-in-box").classList.add("inactive");
-          document.querySelector(".register-box").classList.remove("inactive");
-        });
+    <div class="register-box inactive">
+      <h2>Register</h2>
+      <form id="register-form">
+        <input type="text" id="register-username" placeholder="Username" required />
+        <input type="email" id="register-email" placeholder="Email" required />
+        <input type="password" id="register-password" placeholder="Password" required />
+        <button type="submit">Register</button>
+      </form>
+      <p class="already-have-account">
+        Already have an account? <a href="#" class="toggle-form">Sign-in</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- JavaScript code for handling form submissions -->
+  <script>
+    // Toggle between sign-in and register forms
+    const toggleForm = document.querySelectorAll(".toggle-form");
+    toggleForm.forEach((form) => {
+      form.addEventListener("click", () => {
+        document.querySelector(".sign-in-box").classList.toggle("inactive");
+        document.querySelector(".register-box").classList.toggle("inactive");
       });
-      document
-        .querySelector(".already-have-account a")
-        .addEventListener("click", () => {
-          document.querySelector(".sign-in-box").classList.remove("inactive");
-          document.querySelector(".register-box").classList.add("inactive");
-        });
-    </script>
-  </body>
+    });
+
+    // Sign-in form submission
+    document.getElementById("signin-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("signin-email").value;
+      const password = document.getElementById("signin-password").value;
+
+      // Make a POST request to login API
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        localStorage.setItem("authToken", result.token); // Store JWT token in localStorage
+        window.location.href = "aadhar.html"; // Redirect to application form
+      } else {
+        alert(result.message); // Show error message
+      }
+    });
+
+    // Register form submission
+    document.getElementById("register-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = document.getElementById("register-username").value;
+      const email = document.getElementById("register-email").value;
+      const password = document.getElementById("register-password").value;
+
+      // Make a POST request to the register API
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(result.message);
+        window.location.href = "signin.html"; // Redirect to sign-in page
+      } else {
+        alert(result.message); // Show error message
+      }
+    });
+  </script>
+</body>
 </html>
