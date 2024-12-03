@@ -36,7 +36,7 @@
           <!-- navigation-bar -->
           <ul>
             <li>
-              <a href="#emergency">Emergency Contacts</a>
+              <a href="emergency.html">Emergency Contacts</a>
               <a href="knowmore.html">Know More!</a>
               <a href="compo.html">Composition of Aadhar 360 authorities</a>  
               <a href="user.html">Sign in</a>  
@@ -46,7 +46,6 @@
             </ul>
             </li>
           </ul>
-          <form action="/post" method="post"></form>
         </div>
       </nav>
     <section class="alerts">
@@ -68,13 +67,13 @@
                 href="https://www.ndma.gov.in/sites/default/files/2024-08/CFCR_CWC_DFB_09.08.2024_0.pdf"
                 target="_blank"
                 class="moving-link"
-                >Application released</a
+                >**Application released**</a
               >
               <a
                 href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.accuweather.com/en/in/bengaluru/204108/current-weather/204108&ved=2ahUKEwjz2_6ZpOqHAxULxTgGHbZVBisQFnoECBcQAQ&usg=AOvVaw322gTnW86bSdsSzeX4VAjG"
                 target="_blank"
                 class="moving-link"
-                >Update form available</a
+                >**Update form available**</a
               >
             </div>
           </div>
@@ -160,84 +159,154 @@
   justify-content: space-around;
 }
 
-.box {
-  margin-top: 0;
-  width:325px;
-  height: 280px;
-  margin:20px;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  animation: animate 2s infinite;
-}
+    .box {
+      width: 325px;
+      height: 280px;
+      background-color: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: transform 0.3s ease;
+    }
 
-.box1 {
-  background-color:navy;
-  animation-delay: 0s;
-  color:white;
-  text-align: center;
-}
+    .box:hover {
+      transform: scale(1.05);
+    }
 
-.box2 {
-  background-color: rgb(0, 0, 253);
-  animation-delay: 0.5s;
-  color:white;
-}
+    .box1 {
+      background-color: navy;
+      color: white;
+    }
 
-.box3 {
-  background-color: #29b7fe;
-  animation-delay: 1s;
-  color:white;
-}
+    .box2 {
+      background-color: rgb(0, 0, 253);
+      color: white;
+    }
 
-@keyframes animate {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+    .box3 {
+      background-color: #29b7fe;
+      color: white;
+    }
+    
+    .box1 {
+      animation-delay: 0.2s;
+    }
+    
+    .box2 {
+      animation-delay: 0.4s;
+    }
+    
+    .box3 {
+      animation-delay: 0.6s;
+    }
+    
+    .image-text-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 40px;
+      background-color: #f8f9fa;
+    }
 
-h2 {
-  text-align: center;
-  margin-top: 20px;
-}
+    .image-text-container img {
+      width: 45%;
+      border-radius: 5px;
+    }
 
-p {
-  padding: 20px;
-  text-align: center;
-}
+    .image-text-container .text {
+      width: 50%;
+      text-align: left;
+    }
+
+    .about h4 {
+      font-size: 16px;
+      line-height: 1.6;
+      text-align: center;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .footer {
+      background-color: navy;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .footer p {
+      margin: 5px 0;
+    }
+
+    .footer i {
+      margin: 0 10px;
+      cursor: pointer;
+    }
+
+    .footer i:hover {
+      color: #ddd;
+    }
+
+    @keyframes fadeIn {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Animated Paragraph -->
-  <div class="container">
-    <div class="box box1">
-      <h2>Your Companion!!!</h2>
-      <p>Aadhar 360 is your all time companion to secure your data.
-        Your trust,Our identity.</p>
-    </div>
-    <div class="box box2">
-      <h2>Time to activate your Shield!!</h2>
-      <p>We understood ..Yes...
-        Are you puzzled on how to lock your personal details??And you are 
-        in the right place.
-    
-      </p>
-    </div>
-    <div class="box box3">
-      <h2>Wonders can be done!!</h2>
-      <p>Navigate through the page to know complete imformation about our organization.
-        Get ready for a perfect ride!!
+<header>
+  <div class="name">
+    <img src="images/logo1.jpeg" alt="Aadhar 360 Logo">
+  </div>
+  <div class="nav-links">
+    <ul>
+      <li><a href="emergency.html">Emergency Contacts</a></li>
+      <li><a href="knowmore.html">Know More!</a></li>
+      <li><a href="compo.html">Composition of Aadhar 360 Authorities</a></li>
+      <li><a href="user.html">Sign In</a></li>
+    </ul>
+  </div>
+</header>
 
-      </p>
-    </div>
+<section class="alerts">
+  <h4>ALERTS</h4>
+  <div>
+    <a href="https://www.ndma.gov.in/sites/default/files/2024-08/CFCR_CWC_DFB_09.08.2024_0.pdf" target="_blank" class="moving-link">Application Released</a>
+    <a href="https://www.accuweather.com/en/in/bengaluru/204108/current-weather/204108" target="_blank" class="moving-link">Update Form Available</a>
+  </div>
+</section>
+
+<div class="content">
+  <h1>Want to have a digital key that is yours?</h1>
+  <h1>Hurry up! Clock is ticking...</h1>
+  <h3>Click on <b>"Apply now"</b> and secure your spot in the Aadhar 360 world.</h3>
+  <a href="C:/Users/Jeevitha R/Desktop/Dev_Track/aadhar.html"><button>Apply Now!</button></a>
+  <a href="authority_interface.html"><button>Authority!</button></a>
+</div>
+<div class="image-container">
+  <img src="images/security.jpg" alt="Star-shaped Clipped Image">
+  <div class="text">
+    <p>"Unlocking trust with every verified identity powered by Aadhar 360"</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="box box1">
+    <h2>Your Companion!</h2>
+    <p>Aadhar 360 is your all-time companion to secure your data. Your trust, our identity.</p>
+  </div>
+  <div class="box box2">
+    <h2>Time to Activate Your Shield!</h2>
+    <p>We understood... Yes... Are you puzzled on how to lock your personal details? You're in the right place.</p>
+  </div>
+  <div class="box box3">
+    <h2>Wonders Can Be Done!</h2>
+    <p>Navigate through the page to know complete information about our organization. Get ready for a perfect ride!</p>
   </div>
 
 </body>
@@ -282,13 +351,13 @@ p {
     </div>
 
     <hr style="color: gray; width: 80%" />
-    <div class="emergency" id="emergency">
+    <div class="emergency">
 
       
       <h1>Emergency Helpline Numbers</h1>
       <h2>Unique Identification Authority of India (UIDAI)</h2>
       <ul>
-        <li>National Helpline: <a href="">19478</a> (Toll-Free)</li>
+        <li>National Helpline: <a href="">1947</a> (Toll-Free)</li>
         <li>
           Email<a href="">myaadhaar.uidai.gov.in </a>
           (Helpline)
