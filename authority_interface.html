@@ -1,136 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>KYC Application Verification</title>
-<link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap"
-      rel="stylesheet"
-    />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authority Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 80%;
+            margin-top: 50px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-primary {
+            border-color: #007bff;
+        }
+
+        .panel-heading {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-danger:hover {
+            opacity: 0.8;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
 </head>
-<style>
-body {
-font-family: Arial, sans-serif;
-background-color: #f7f7f7;
-}
-.container {
-width: 100%;
-margin: 40px auto;
-}
-.row {
-margin-right: -15px;
-margin-left: -15px;
-}
-.col-md-6 {
-width:100%;
-float: left;
-position: relative;
-min-height: 1px;
-padding-right: 15px;
-padding-left: 15px;
-}
-.col-md-offset-3 {
-margin-left: 25%;
-width:800px;
-}
-.panel {
-background-color: #fff;
-border: 1px solid #ddd;
-border-radius: 4px;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-width:1500px;
-}
-.panel-primary {
-border-color: #337ab7;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.panel-heading {
-background-color: navy;
-color: #fff;
-border-color: #337ab7;
-padding: 10px 15px;
-border-bottom: 1px solid #337ab7;
-text-align: center;
-}
-.panel-body {
-padding: 15px;
-}
-.form-group {
-margin-bottom: 15px;
-text-align: left;
-}
-.form-control {
-width: 100%;
-height: 40px;
-padding: 10px;
-font-size: 16px;
-border: 1px solid #ccc;
-}
-.form-control:focus {
-border-color: #337ab7;
-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-.btn-primary {
-background-color: navy;
-color: #fff;
-border-color: #337ab7;
-padding: 10px 20px;
-font-size: 16px;
-border-radius: 5px;
-}
-.btn-primary:hover {
-background-color: #23527c;
-border-color: #23527c;
-}
-.panel-footer {
-background-color: #f7f7f7;
-border-top: 1px solid navy;
-padding: 10px;
-text-align: right;
-}
-small {
-font-size: 12px;
-color: #666;
-}
-.text-center {
-text-align: center;
-}
-.panel-body h2 {
-margin-top: 0;
-margin-bottom: 20px;
-}
-</style>
 <body>
-<div class="container">
-<div class="row col-md-6 col-md-offset-3">
-<div class="panel panel-primary">
-<div class="panel-heading text-center">
-<h1>KYC Application Verification</h1>
-</div>
-<div class="panel-body">
-<div id="authority-interface">
-<h1>KYC Application Verification</h1>
-<ul id="pending-applications">
-<!-- List of pending KYC applications here -->
-</ul>
-<button id="accept-button">Accept</button>
-<button id="reject-button">Reject</button>
-<input type="text" id="application-id" placeholder="Enter Application ID">
-</div>
-</div>
-<div class="panel-footer text-right">
-<small>&copy; Aadhar 360 </small>
-</div>
-</div>
-</div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1>Authority Dashboard</h1>
+            </div>
+            <div class="panel-body">
+                <button id="loadApplications" class="btn btn-primary" disabled>Load All Applications</button>
+                
+                <table class="table table-bordered" id="applicationsTable" style="margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Aadhaar Number</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTableBody">
+                    </tbody>
+                </table>
+
+                <div id="statusMessage" class="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
     <script>
-        const contractAddress = '0x745C484B40353Dd416D85431dae364b2Ed4242e9';  // Replace with actual contract address
-        const contractABI = [
+        let web3;
+        let contract;
+        let authorityAddress;
+
+        async function connectMetaMask() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    authorityAddress = accounts[0];
+
+                    web3 = new Web3(window.ethereum);
+
+                    const contractAddress = '0x5c5CeA55BeF1903bBa63FB1f6F1E0BfE710767F1'; 
+                    const abi =  [
     {
       "inputs": [
         {
@@ -183,6 +162,26 @@ margin-bottom: 20px;
     {
       "inputs": [],
       "name": "authority",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "users",
       "outputs": [
         {
           "internalType": "address",
@@ -289,50 +288,94 @@ margin-bottom: 20px;
       "stateMutability": "view",
       "type": "function",
       "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllUserApplications",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
     }
-  ];  // Replace with the actual ABI of your contract
-        let web3;
-        let contract;
-        let authorityAddress;
+  ];
 
-        // Initialize Web3 and contract
-        if (typeof window.ethereum !== 'undefined') {
-            web3 = new Web3(window.ethereum);
-            contract = new web3.eth.Contract(contractABI, contractAddress);
-        } else {
-            alert('Please install MetaMask to interact with this application.');
-        }
 
-        // Get authority address
-        async function getAuthorityAddress() {
-            const accounts = await web3.eth.requestAccounts();
-            authorityAddress = accounts[0];
-        }
+                    contract = new web3.eth.Contract(abi, contractAddress);
 
-        // Handle accept/reject KYC
-        async function verifyKYC(status) {
-            const applicationId = document.getElementById('application-id').value;
-            const userAddress = applicationId;  // You need to fetch the correct address from your application list
+                    document.getElementById('loadApplications').disabled = false;
+                    await loadApplications();
 
-            await getAuthorityAddress();
-
-            try {
-                await contract.methods.verifyAadhaar(userAddress, status).send({ from: authorityAddress });
-                alert(`KYC Status Updated: ${status === 1 ? 'Accepted' : 'Rejected'}`);
-            } catch (error) {
-                console.error(error);
-                alert('Error updating KYC status.');
+                } catch (error) {
+                    console.error("MetaMask connection error:", error);
+                    alert("Failed to connect to MetaMask. Please try again.");
+                }
+            } else {
+                alert("Please install MetaMask!");
             }
         }
 
-        // Attach event listeners to Accept/Reject buttons
-        document.getElementById('accept-button').addEventListener('click', () => {
-            verifyKYC(1);  // 1 means Accepted
-        });
+        async function loadApplications() {
+            try {
+                const tableBody = document.getElementById('applicationsTableBody');
+                tableBody.innerHTML = '';
 
-        document.getElementById('reject-button').addEventListener('click', () => {
-            verifyKYC(2);  // 2 means Rejected
-        });
+                const users = await contract.methods.getAllUserApplications().call({ from: authorityAddress });
+
+                if (users.length === 0) {
+                    const noDataRow = tableBody.insertRow();
+                    noDataRow.innerHTML = '<td colspan="4">No applications found</td>';
+                } else {
+                    for (const user of users) {
+                        const [name, aadhaarNumber, status] = await contract.methods.getUserKYCDetails(user).call();
+                        const statusText = status === '0' ? 'Pending' : status === '1' ? 'Accepted' : 'Rejected';
+
+                        const row = tableBody.insertRow();
+                        row.innerHTML = `
+                            <td>${name}</td>
+                            <td>${aadhaarNumber}</td>
+                            <td>${statusText}</td>
+                            <td>
+                                <button class="btn btn-success btn-sm mr-1" onclick="verifyKYC('${user}', 1)">Accept</button>
+                                <button class="btn btn-danger btn-sm" onclick="verifyKYC('${user}', 2)">Reject</button>
+                            </td>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error("Error loading applications:", error);
+                alert('Failed to load applications');
+            }
+        }
+
+        async function verifyKYC(userAddress, status) {
+            try {
+                await contract.methods.verifyAadhaar(userAddress, status).send({ from: authorityAddress });
+                alert('KYC Verified!');
+                await loadApplications();
+            } catch (error) {
+                console.error("KYC verification error:", error);
+                alert('Error verifying KYC');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', connectMetaMask);
+        document.getElementById('loadApplications').addEventListener('click', loadApplications);
+
+        if (window.ethereum) {
+            window.ethereum.on('accountsChanged', (accounts) => {
+                if (accounts.length > 0) {
+                    authorityAddress = accounts[0];
+                } else {
+                    connectMetaMask();
+                }
+            });
+        }
     </script>
 </body>
 </html>
