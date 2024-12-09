@@ -1,75 +1,77 @@
 const express = require('express');
-const pasth=require("path");
-const bcrypt=require("bcrypt");
-const collection=require("./config");
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const cors = require('cors'); 
 
-const app=express();
+const app = express();
 
-app.use(express.json());
+app.use(cors());
 
-app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-app.set('view engine','ejs');
+mongoose.connect('mongodb://localhost:27017/signupDB', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('Database connected successfully'))
+    .catch(err => console.log('Database connection error:', err));
 
-app.use(express.static("public"));
+const User = mongoose.model('User', new mongoose.Schema({
+    username: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true },
+    password: { type: String, required: true }
+}));
 
-app.get("/",(req,res)=>{
-    res.render("login");
-})
+app.post('/signup', async (req, res) => {
+    try {
+        const { username, email, phone, password, confirmPassword } = req.body;
 
+        if (password !== confirmPassword) {
+            return res.status(400).send('Passwords do not match.');
+        }
 
-app.get("/signup",(req,res)=>{
-    res.render("signup");
-})
+        const newUser = new User({ username, email, phone, password });
+        await newUser.save();
 
+        res.send('Signup successful!');
+    } catch (error) {
+        console.error('Error saving user:', error);
 
-app.post("/signup",async(req,res)=>{
-    const data={
-        name:req.body.username,
-        password:req.body.password
-    }
-
-    const existingUser=await collection.findOne({name: data.name});
-    if(existingUser){
-        res.send("User already exists. Please choose a different name.");
-    }else{
-
-        const saltRounds=10;
-        const hashedPassword=await bcrypt.hash(data.password, saltRounds);
-
-        data.password=hashedPassword;
-
-        const userdata=await collection.insertMany(data);
-        console.log(userdata);
-        console.log("User signed up:", data);
-        return res.send("Signup successful!");
-    }
-
-
-}) ;
-
-app.post("/login", async(req,res)=>{
-    try{
-            const check=await collection.findOne({name: req.body.username});
-            if(!check){
-                res.send("user name cannot found");
-
-            }
-                                                                                                                                                                                                                                                                                                                                                                                                      
-            const isPasswordMatch=await bcrypt.compare(req.body.password, check.password);
-            if(isPasswordMatch){
-                res.render("home");
-            }
-            else{
-                req.send("wrong password");
-            }
-    }
-    catch{
-            res.send("wrong Details");
+        if (error.code === 11000) {
+            res.status(400).send('Email already registered.');
+        } else {
+            res.status(500).send('An error occurred during signup.');
+        }
     }
 });
 
-const port=5000;
-app.listen(port,()=>{
-    console.log(`Server running on port:${port}`)
-})
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+
+app.post('/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).send('User not found.');
+        }
+
+        if (user.password !== password) {
+            return res.status(400).send('Invalid password.');
+        }
+
+        res.send('Login successful!');
+    } catch (error) {
+        console.error('Error during login:', error);
+        res.status(500).send('An error occurred during login.');
+    }
+});
+
+app.get('/login', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+
+const PORT = 5000;
+app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
