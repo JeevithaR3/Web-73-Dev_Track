@@ -8,17 +8,13 @@
     body {
         font-family: Arial, sans-serif;
         background-color: #f7f7f7;
-     
     }
 
     .container {
         width: 100%; 
         max-width: 1350px;
-        padding-right:50px;
-        padding-left:50px;
-        align-items: center;
-        display: flex;
-        justify-content: center;
+        margin: 40px auto;
+        
     }
 
     .row {
@@ -31,9 +27,8 @@
         float: left;
         position: relative;
         min-height: 1px;
-        text-align:center;
-        padding-right:25px;
-        padding-left: 25px;
+        padding-right: 15px;
+        padding-left: 15px;
     }
 
     .col-md-offset-3 {
@@ -123,377 +118,135 @@
 </style>
 <body>
     <div class="container">
-        <div class="row col-md-6 col-md-offset-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading text-center">
-                    <h1>Aadhar 360 Form </h1>
-                </div>
-                <div class="panel-body">
-                    <form id="signupForm">
-
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" name="name" required />
-
-
-                        </div>
-                        <div class="form-group">
-                            <label for="aadharNumber">Aadhar number </label>
-                            <input type="text" class="form-control" id="aadharNumber" name="aadharNumber"  maxlength="12" pattern="\d{12}" required title="Aadhar number should be exactly 12 digits" />
-                        </div>
-                         <div class="form-group">
-                                <label for="dob">Date Of Birth </label>
-                                <input type="date" class="form-control" id="dob" name="dob" required/>
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading text-center">
+                        <h1>Aadhar 360 Form </h1>
+                    </div>
+                    <div class="panel-body">
+                        <form id="kyc-form" action="/post" method="post">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="Name" required oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"/>
                             </div>
-                        <div class="form-group">
-                            <label for="Gender">Gender </label>
-                            <input type="text" class="form-control" id="gender" name="gender" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="PhoneNumber">Phone Number </label>
-                            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" maxlength="10" pattern="\d{10}" required title="Phone number should be exactly 10 digits"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="emailid">Email id </label>
-                            <input type="text" class="form-control" id="emailid" name="emailid" required  pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" 
-                            title="Please enter a valid email address, e.g., user@example.com"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="fatherName">Father's or Guardian’s Name </label>
-                            <input type="text" class="form-control" id="fatherName" name="fatherName" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="nationality">Nationality </label>
-                            <input type="text" class="form-control" id="nationality" name="nationality" required/>
-                           
-                        </div>
-                        <div class="form-group">
-                            <label for="state">State </label>
-                            <input type="text" class="form-control" id="state" name="state" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">City </label>
-                            <input type="text" class="form-control" id="city" name="city" required/>
-                        </div>
-                        <div class="form-group">
-                            <label for="pinCode">PinCode </label>
-                            <input type="text" class="form-control" id="pinCode" name="pinCode" maxlength="6" pattern="\d{6}" required title="Pincode should be exactly 10 digits"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="emergency_contact_number">Emergency Contact Number </label>
-                            <input type="text" class="form-control" id="emergency_contact_number" name="emergency_contact_number"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="address">Address </label>
-                            <input type="text" class="form-control" id="address" name="address" required/>
-                        </div>
-                        <button id="submit-kyc" type="submit" class="btn btn-primary">Submit</button>
-
-                    </form>
-                </div>
-                <div clas="panel-footer text-right">
-                    <small>&copy; Aadhar 360 </small>
+                            <div class="form-group">
+                                <label for="aadharNumber">Aadhar number </label>
+                                <input type="text" class="form-control" id="aadharNumber" name="aadharNumber" maxlength="12" pattern="\d{12}" required title="Aadhar number should be exactly 12 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob">Date Of Birth </label>
+                                <input type="date" class="form-control" id="dob" name="dob" required title="Enter valid DOB" min="1900-01-01" max="2006-12-31" />
+                            </div>
+                            <div class="form-group">
+                                <label for="gender">Gender </label>
+                                <select name="form-control" id="gender" name="gender">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number </label>
+                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" maxlength="10" pattern="\d{10}" required title="Phone number should be exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="emailid">Email id </label>
+                                <input type="email" class="form-control" id="emailid" name="emailid" required/>
+                            </div>
+                            <div class="form-group">
+                                <label for="fatherName">Father's or Guardian’s Name </label>
+                                <input type="text" class="form-control" id="fatherName" name="fatherName" required oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="nationality">Nationality </label>
+                                <select name="form-control" id="nationality" name="nationality">
+                                    <option value="Indian">Indian</option>
+                                    <option value="Others">Others</option>                                
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="state">State </label>
+                                <input type="text" class="form-control" id="state" name="state" required oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City </label>
+                                <input type="text" class="form-control" id="city" name="city" required oninput="this.value = this.value.replace(/[^a-zA-Z ]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="pinCode">PinCode </label>
+                                <input type="text" class="form-control" id="pinCode" name="pinCode" maxlength="7" pattern="\d{6,7}" required title="Pincode should be 6 or 7 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="emergency_contact_number">Emergency Contact Number </label>
+                                <input type="text" class="form-control" id="emergency_contact_number" name="emergency_contact_number" maxlength="10" pattern="\d{10}" required title="Phone number should be exactly 10 digits" oninput="this.value = this.value.replace(/[^0-9]/g, '')"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address </label>
+                                <input type="text" class="form-control" id="address" name="address" maxlength="70"required title="Enter a valid address" />
+                            </div>
+                            <button type="submit" id="submit-kyc" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <div class="panel-footer text-right">
+                        <small>&copy; Aadhar 360 </small>
+                    </div>
                 </div>
             </div>
         </div>
-      </div>
-      <!-- Include Web3.js CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.6.1/web3.min.js"></script>
+    </div>
 
-      <script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.6.1/dist/web3.min.js"></script>
+    <script>
+        const contractAddress = '0x745C484B40353Dd416D85431dae364b2Ed4242e9'; 
+        const contractABI = [
+            // ABI here...
+        ];  
+
         let web3;
         let contract;
         let userAddress;
-    
-        // Check if MetaMask is installed
-        if (window.ethereum) {
-            // Initialize web3 using MetaMask's provider
+
+        if (typeof window.ethereum !== 'undefined' && typeof Web3 !== 'undefined') {
             web3 = new Web3(window.ethereum);
-    
-            // Request accounts from MetaMask
-            window.ethereum.request({ method: 'eth_requestAccounts' }).then(accounts => {
-                // Use the first account returned by the eth_requestAccounts method
-                userAddress = accounts[0];
-    
-                // Contract address and ABI
-                const contractAddress = '0x12cCF2EDfE38c876568dFaDbf2B5FaD0f7F752c1'; // Replace with your contract address
-                const abi = [
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_authority",
-          "type": "address"
+            contract = new web3.eth.Contract(contractABI, contractAddress);
+        } else {
+            alert('Please install MetaMask to interact with this application.');
         }
-      ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "string",
-          "name": "aadhaarNumber",
-          "type": "string"
+
+        async function getUserAddress() {
+            const accounts = await web3.eth.requestAccounts();
+            userAddress = accounts[0];
         }
-      ],
-      "name": "AadhaarRegistered",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "user",
-          "type": "address"
-        },
-        {
-          "indexed": false,
-          "internalType": "enum KYCVerification.KYCStatus",
-          "name": "status",
-          "type": "uint8"
+
+        window.ethereum.on('accountsChanged', async (accounts) => {
+            userAddress = accounts[0];
+        });
+
+        async function submitKYC(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const aadharNumber = document.getElementById('aadharNumber').value;
+
+            await getUserAddress();
+
+            const networkId = await web3.eth.net.getId();
+            if (networkId !== YOUR_EXPECTED_NETWORK_ID) {
+                alert('Please switch to the correct network.');
+                return;
+            }
+
+            try {
+                await contract.methods.registerAadhaar(name, aadharNumber).send({ from: userAddress });
+                document.getElementById('status-message').innerHTML = 'Your KYC application has been submitted!';
+            } catch (error) {
+                console.error(error);
+                document.getElementById('status-message').innerHTML = 'Error submitting KYC. Please try again.';
+            }
         }
-      ],
-      "name": "AadhaarVerified",
-      "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "authority",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "users",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "string",
-          "name": "_name",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "_aadhaarNumber",
-          "type": "string"
-        }
-      ],
-      "name": "registerAadhaar",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        },
-        {
-          "internalType": "enum KYCVerification.KYCStatus",
-          "name": "_status",
-          "type": "uint8"
-        }
-      ],
-      "name": "verifyAadhaar",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        }
-      ],
-      "name": "getUserKYCDetails",
-      "outputs": [
-        {
-          "internalType": "string",
-          "name": "name",
-          "type": "string"
-        },
-        {
-          "internalType": "string",
-          "name": "aadhaarNumber",
-          "type": "string"
-        },
-        {
-          "internalType": "enum KYCVerification.KYCStatus",
-          "name": "status",
-          "type": "uint8"
-        },
-        {
-          "internalType": "uint256",
-          "name": "submissionTime",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "verificationTime",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
-        }
-      ],
-      "name": "getVerificationStatus",
-      "outputs": [
-        {
-          "internalType": "enum KYCVerification.KYCStatus",
-          "name": "status",
-          "type": "uint8"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "getAllUserApplications",
-      "outputs": [
-        {
-          "internalType": "address[]",
-          "name": "",
-          "type": "address[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    }
-  ]; // Replace with your contract's ABI
-   // Handle form submission
 
-        // Initialize the contract
-        contract = new web3.eth.Contract(abi, contractAddress);
-        console.log("MetaMask connected, user address:", userAddress);
-
-        
-    }).catch(err => {
-        alert("Please connect to MetaMask!");
-        console.error(err);
-    });
-} else {
-    alert("Please install MetaMask!");
-}
-
-// Handle form submission
-const form = document.getElementById('signupForm');
-form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    // Capture form data
-    const formData = new FormData(event.target);
-    const name = formData.get('name');
-    const aadharNumber = formData.get('aadharNumber');
-
-    // Validation for required fields
-    if (!name || !aadharNumber) {
-        alert("Please fill out all required fields!");
-        return;
-    }
-
-    console.log("Form data captured:", name, aadharNumber);
-
-    try {
-
-      // Check if the Aadhaar number is already registered
-      const existingDetails = await contract.methods.getUserKYCDetails(userAddress).call();
-        if (existingDetails.aadhaarNumber === aadharNumber) {
-            alert('This Aadhaar number is already registered. Please do not submit again.');
-            return;
-        }
-        // Submit the application data to the blockchain
-        const tx = await contract.methods.registerAadhaar(name, aadharNumber).send({ from: userAddress });
-
-        // Log the transaction hash to the console and show in an alert
-        console.log("Transaction sent. Hash:", tx.transactionHash);
-        alert(`Form submitted successfully! Data saved to Blockchain. Transaction Hash: ${tx.transactionHash}`);
-
-        // Reset the form after submission
-        form.reset();
-
-        // Check the user's KYC status after submission
-        checkKYCStatus();
-    } catch (error) {
-        console.error('Error occurred during transaction:', error);
-        alert('An error occurred. Please check the console for details.');
-    }
-});
-
-// Function to check KYC status and display details
-async function checkKYCStatus() {
-    try {
-        // Get user KYC details
-        const details = await contract.methods.getUserKYCDetails(userAddress).call();
-        const statusText = ['Pending', 'Accepted', 'Rejected'][details.status]; // Enum mapping
-
-        // Format timestamps to readable dates
-        const submissionDate = new Date(details.submissionTime * 1000).toLocaleString();
-        const verificationDate = details.verificationTime > 0
-            ? new Date(details.verificationTime * 1000).toLocaleString()
-            : "Not yet verified";
-
-        // Display user status and details
-        alert(`KYC Status: ${statusText}\n` +
-              `Name: ${details.name}\n` +
-              `Aadhaar Number: ${details.aadhaarNumber}\n` +
-              `Submission Time: ${submissionDate}\n` +
-              `Verification Time: ${verificationDate}`);
-    } catch (error) {
-        console.error('Error fetching KYC details:', error);
-    }
-}
-</script>
+        document.getElementById('kyc-form').addEventListener('submit', submitKYC);
+    </script>
 </body>
 </html>
