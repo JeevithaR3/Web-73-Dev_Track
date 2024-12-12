@@ -6,7 +6,7 @@ connect.then(()=>{
 })
 
 .catch(()=>{
-    console.log("Database cannotbe connected");
+    console.log("Database cannot be connected");
 })
 
 const LoginSchema=new mongoose.Schema({
