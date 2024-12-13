@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+          background: white;
+          color: #fff;
+          font-family: 'Roboto', sans-serif;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+      }
+      .container {
+          background-color: #fff;
+          color: #333;
+          border-radius: 10px;
+          padding: 70px;
+          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+          max-width: 500px;
+          text-align: center;
+      }
+      h1 {
+          font-size: 1.8rem;
+          margin-bottom: 20px;
+          color: #333;
+      }
+      .btn-primary {
+          background-color: #6a11cb;
+          border: none;
+          transition: background-color 0.3s ease;
+      }
+      .btn-primary:hover {
+          background-color: #2575fc;
+      }
+      .btn-success {
+          background-color: #28a745;
+          border: none;
+          transition: background-color 0.3s ease;
+      }
+      .btn-success:hover {
+          background-color: #218838;
+      }
+      .alert {
+          font-size: 1rem;
+      }
+      .message-box {
+          margin-top: 20px;
+          background-color: #f8f9fa;
+          padding: 15px;
+          border-radius: 5px;
+          font-size: 1rem;
+          color: #6c757d;
+          text-align: center;
+      }
+      .divider {
+          margin: 20px 0;
+          border-top: 1px solid #ddd;
+      }
+  </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Applicant Dashboard</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <button id="connectMetaMask" class="btn btn-primary btn-block">Connect MetaMask</button>
+                <button id="checkStatus" class="btn btn-success btn-block" disabled>Check Application Status</button>
+                <div id="statusMessage" class="mt-3 alert" style="display: none;"></div>
+                <div class="divider"></div>
+                <div class="message-box">
+                    Connect your MetaMask wallet and unlock your application status with a click!
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let contract;
+        let applicantAddress;
+
+        const contractAddress = '0xe7ED614634264Cb59066d597C204Be5D35eD28D1'; // Replace with your contract address
+        const abi =[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_authority",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "AadhaarRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "name": "AadhaarVerified",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "authority",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "users",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "registerAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "_status",
+          "type": "uint8"
+        }
+      ],
+      "name": "verifyAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserKYCDetails",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "submissionTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "verificationTime",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getVerificationStatus",
+      "outputs": [
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllUserApplications",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
+
+        // Function to connect MetaMask
+        async function connectMetaMask() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    applicantAddress = accounts[0];
+                    web3 = new Web3(window.ethereum);
+                    contract = new web3.eth.Contract(abi, contractAddress);
+                    document.getElementById('checkStatus').disabled = false;
+                    alert("Connected to MetaMask!");
+                } catch (error) {
+                    console.error("MetaMask connection error:", error);
+                    alert("Failed to connect to MetaMask.");
+                }
+            } else {
+                alert("Please install MetaMask!");
+            }
+        }
+
+        // Function to check application status
+        async function checkApplicationStatus() {
+            const statusMessage = document.getElementById('statusMessage');
+            statusMessage.style.display = 'none';
+
+            try {
+                const result = await contract.methods.getUserKYCDetails(applicantAddress).call();
+                const status = parseInt(result.status, 10);
+                const statusText = status === 0 ? 'Pending' : status === 1 ? 'Accepted' : 'Rejected';
+
+                statusMessage.style.display = 'block';
+                statusMessage.textContent = `Your application status is: ${statusText}`;
+                statusMessage.className = `alert alert-${status === 1 ? 'success' : status === 2 ? 'danger' : 'info'}`;
+            } catch (error) {
+                console.error("Error checking status:", error);
+                alert("Failed to fetch application status. Please try again.");
+            }
+        }
+
+        // Attach events to buttons
+        document.getElementById('connectMetaMask').addEventListener('click', connectMetaMask);
+        document.getElementById('checkStatus').addEventListener('click', checkApplicationStatus);
+    </script>
+</body>
+</html>
