@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authority Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            width: 80%;
+            margin-top: 50px;
+        }
+
+        .panel {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-primary {
+            border-color: navy;
+        }
+
+        .panel-heading {
+            background-color:navy;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color:navy;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-primary:hover, .btn-danger:hover {
+            opacity: 0.8;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1>Authority Dashboard</h1>
+            </div>
+            <div class="panel-body">
+                <button id="loadApplications" class="btn btn-primary" disabled>Load All Applications</button>
+                
+                <table class="table table-bordered" id="applicationsTable" style="margin-top: 20px;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Aadhaar Number</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicationsTableBody">
+                    </tbody>
+                </table>
+
+                <div id="statusMessage" class="alert" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
+    <script>
+        let web3;
+        let contract;
+        let authorityAddress;
+
+        async function connectMetaMask() {
+            if (window.ethereum) {
+                try {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    authorityAddress = accounts[0];
+
+                    web3 = new Web3(window.ethereum);
+
+                    const contractAddress = '0xe7ED614634264Cb59066d597C204Be5D35eD28D1'; 
+                    const abi =[
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_authority",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "AadhaarRegistered",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "name": "AadhaarVerified",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "authority",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "users",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "_aadhaarNumber",
+          "type": "string"
+        }
+      ],
+      "name": "registerAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "_status",
+          "type": "uint8"
+        }
+      ],
+      "name": "verifyAadhaar",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserKYCDetails",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "aadhaarNumber",
+          "type": "string"
+        },
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        },
+        {
+          "internalType": "uint256",
+          "name": "submissionTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "verificationTime",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_user",
+          "type": "address"
+        }
+      ],
+      "name": "getVerificationStatus",
+      "outputs": [
+        {
+          "internalType": "enum KYCVerification.KYCStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    },
+    {
+      "inputs": [],
+      "name": "getAllUserApplications",
+      "outputs": [
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function",
+      "constant": true
+    }
+  ];
+
+  contract = new web3.eth.Contract(abi, contractAddress);
+
+// Enable the button after MetaMask connection
+document.getElementById('loadApplications').disabled = false;
+console.log('MetaMask connected:', authorityAddress);
+} catch (error) {
+console.error("MetaMask connection error:", error);
+alert("Failed to connect to MetaMask. Please try again.");
+}
+} else {
+alert("Please install MetaMask!");
+}
+}
+
+async function loadApplications() {
+const tableBody = document.getElementById('applicationsTableBody');
+tableBody.innerHTML = ''; // Clear previous rows
+
+try {
+const users = await contract.methods.getAllUserApplications().call({ from: authorityAddress });
+
+if (users.length === 0) {
+tableBody.innerHTML = '<tr><td colspan="4">No applications found</td></tr>';
+} else {
+for (const user of users) {
+    const details = await contract.methods.getUserKYCDetails(user).call();
+    const name = details.name || 'N/A';
+    const aadhaarNumber = details.aadhaarNumber || 'N/A';
+    const status = parseInt(details.status, 10); // Convert status to an integer
+    const statusText = status === 0 ? 'Pending' : status === 1 ? 'Accepted' : 'Rejected';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+        <td>${name}</td>
+        <td>${aadhaarNumber}</td>
+        <td>${statusText}</td>
+        <td>
+            <button class="btn btn-success btn-sm mr-1" onclick="verifyKYC('${user}', 1)">Accept</button>
+            <button class="btn btn-danger btn-sm" onclick="verifyKYC('${user}', 2)">Reject</button>
+        </td>
+    `;
+    tableBody.appendChild(row);
+}
+}
+} catch (error) {
+console.error("Error loading applications:", error);
+alert('Unauthorized access.Permission denied');
+}
+}
+
+async function verifyKYC(user, status) {
+try {
+await contract.methods.verifyAadhaar(user, status).send({ from: authorityAddress });
+
+const statusMessage = document.getElementById('statusMessage');
+statusMessage.classList.remove('alert-danger', 'alert-success');
+statusMessage.style.display = 'block';
+
+if (status === 1) {
+statusMessage.textContent = 'KYC Verification Accepted!';
+statusMessage.classList.add('alert-success');
+} else {
+statusMessage.textContent = 'KYC Verification Rejected!';
+statusMessage.classList.add('alert-danger');
+}
+
+loadApplications(); // Reload applications after verification
+} catch (error) {
+console.error("Error verifying KYC:", error);
+alert('Failed to verify KYC. Check the console for details.');
+}
+}
+
+// Initialize MetaMask connection and button functionality on DOM load
+document.addEventListener('DOMContentLoaded', connectMetaMask);
+document.getElementById('loadApplications').addEventListener('click', loadApplications);
+</script>
+</body>
+</html>
